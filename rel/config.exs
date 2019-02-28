@@ -48,7 +48,7 @@ end
 # when running `mix release`, the first release in the file
 # will be used by default
 
-release :tanks do
+release :task_manager do
   set version: current_version(:task_manager)
   set applications: [
     :runtime_tools

@@ -1,0 +1,16 @@
+[Unit]
+Description=Task Manager
+
+[Service]
+Type=simple
+User=task_manager
+Group=task_manager
+Restart=on-failure
+Environment=MIX_ENV=prod "PORT=4794"
+Environment=LANG=en_US.UTF-8
+
+WorkingDirectory=/home/task_manager/task_manager
+ExecStart=/home/task_manager/task_manager/start.sh
+
+[Install]
+WantedBy=multi-user.target
