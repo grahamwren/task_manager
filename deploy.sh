@@ -12,12 +12,15 @@ mkdir -p priv/static
 
 mix deps.get
 mix compile
-(cd assets && npm install)
+(cd assets && pnpm install)
 (cd assets && webpack --mode production)
 mix phx.digest
 
 echo "Generating release..."
 mix release
+
+echo "Migrating database..."
+mix ecto.migrate
 
 #echo "Stopping old copy of app, if any..."
 #_build/prod/rel/draw/bin/practice stop || true
