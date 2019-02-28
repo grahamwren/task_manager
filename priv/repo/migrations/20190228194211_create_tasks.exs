@@ -1,4 +1,4 @@
-defmodule TaskManager.Repo.Migrations.CreateTask do
+defmodule TaskManager.Repo.Migrations.CreateTasks do
   use Ecto.Migration
 
   def change do
@@ -7,7 +7,7 @@ defmodule TaskManager.Repo.Migrations.CreateTask do
       add :description, :string
       add :time_worked, :integer
       add :completed, :boolean, default: false, null: false
-      add :user_id, references(:users, on_delete: :delete_all)
+      add :user_id, references(:users, on_delete: :nothing)
 
       timestamps()
     end
