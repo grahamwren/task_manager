@@ -7,29 +7,34 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Hello TaskManager!</title>
+    <title>Productivity</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
   </head>
 
   <body>
     <div class="container">
       <header class="header">
-        <nav role="navigation">
-          <ul class="nav nav-pills pull-right">
-            <li><a href="http://www.phoenixframework.org/docs">Get Started</a></li>
-          </ul>
+        <nav role="navigation" class="navbar navbar-expand-lg navbar-light bg-light">
+          <a class="navbar-brand" href="/">Productivity</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          </div>
         </nav>
         <span class="logo"></span>
       </header>
-
-      <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
-      <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
-
+      <% if (info_alert = get_flash(@conn, :info)) do %>
+          <p class="alert alert-info" role="alert"><%= info_alert %></p>
+      <% end %>
+      <% if (error_alert = get_flash(@conn, :error)) do %>
+          <p class="alert alert-danger" role="alert"><%= error_alert %></p>
+      <% end %>
       <main role="main">
         <%= render @view_module, @view_template, assigns %>
       </main>
-
-    </div> <!-- /container -->
+    </div>
     <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
   </body>
 </html>
