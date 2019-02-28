@@ -43,6 +43,13 @@ defmodule TaskManagerWeb do
     end
   end
 
+  def model do
+    quote do
+      use Phoenix.Model, root: "lib/task_manager_web/models",
+                         namespace: TaskManagerWeb
+    end
+  end
+
   def router do
     quote do
       use Phoenix.Router
