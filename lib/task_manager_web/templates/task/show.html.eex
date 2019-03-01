@@ -1,28 +1,34 @@
 <h2>Show Task</h2>
 
-<ul>
+<ul class="task-list">
 
   <li>
-    <strong>Title:</strong>
+    <strong>Title: </strong>
     <%= @task.title %>
   </li>
 
   <li>
-    <strong>Description:</strong>
+    <strong>Description: </strong>
     <%= @task.description %>
   </li>
 
   <li>
-    <strong>Time worked:</strong>
-    <%= @task.time_worked %>
+    <strong>Time worked (mins): </strong>
+    <%= @task.time_worked * 15 %>
   </li>
 
   <li>
-    <strong>Completed:</strong>
+    <strong>Completed: </strong>
     <%= @task.completed %>
   </li>
 
-</ul>
+  <li>
+    <strong>User: </strong>
+    <%= @task.user.name || @task.user.email %>
+  </li>
 
-<span><%= link "Edit", to: task_path(@conn, :edit, @task) %></span>
-<span><%= link "Back", to: task_path(@conn, :index) %></span>
+</ul>
+<div class="buttons">
+  <%= link "Edit", to: task_path(@conn, :edit, @task) %>
+  <%= link "Back", to: task_path(@conn, :index) %>
+</div>

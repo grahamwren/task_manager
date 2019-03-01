@@ -1,57 +1,65 @@
 defmodule TaskManagerWeb.TaskController do
   use TaskManagerWeb, :controller
 
-  alias TaskManager.Models
-  alias TaskManager.Models.Task
+  alias TaskManager.Tasks
+  alias TaskManager.Users
+  alias TaskManager.Repo
+  alias TaskManager.Tasks.Task
 
   def index(conn, _params) do
-    tasks = Models.list_tasks()
+    tasks = Users.get_tasks(conn.assigns.current_user)
     render(conn, "index.html", tasks: tasks)
   end
 
   def new(conn, _params) do
-    changeset = Models.change_task(%Task{})
+    changeset = Tasks.change_task(%Task{})
     render(conn, "new.html", changeset: changeset)
   end
 
   def create(conn, %{"task" => task_params}) do
-    case Models.create_task(task_params) do
-      {:ok, task} ->
+    task_params = %{
+      task_params |
+      "user_id" => conn.assigns.current_user.id
+    }
+    case Tasks.create_task(task_params) do
+      {:ok, _task} ->
         conn
         |> put_flash(:info, "Task created successfully.")
-        |> redirect(to: task_path(conn, :show, task))
+        |> redirect(to: task_path(conn, :index))
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
   end
 
   def show(conn, %{"id" => id}) do
-    task = Models.get_task!(id)
+    task =
+      Tasks.get_task!(id)
+      |> Repo.preload([:user])
     render(conn, "show.html", task: task)
   end
 
   def edit(conn, %{"id" => id}) do
-    task = Models.get_task!(id)
-    changeset = Models.change_task(task)
+    task = Tasks.get_task!(id)
+    changeset = Tasks.change_task(task)
     render(conn, "edit.html", task: task, changeset: changeset)
   end
 
   def update(conn, %{"id" => id, "task" => task_params}) do
-    task = Models.get_task!(id)
+    task = Tasks.get_task!(id)
 
-    case Models.update_task(task, task_params) do
+    case Tasks.update_task(task, task_params) do
       {:ok, task} ->
         conn
         |> put_flash(:info, "Task updated successfully.")
-        |> redirect(to: task_path(conn, :show, task))
+        |> redirect(to: task_path(conn, :index))
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", task: task, changeset: changeset)
     end
   end
 
   def delete(conn, %{"id" => id}) do
-    task = Models.get_task!(id)
-    {:ok, _task} = Models.delete_task(task)
+    task = Tasks.get_task!(id)
+    {:ok, _task} = Tasks.delete_task(task)
 
     conn
     |> put_flash(:info, "Task deleted successfully.")

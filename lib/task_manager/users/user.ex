@@ -1,4 +1,4 @@
-defmodule TaskManager.Models.User do
+defmodule TaskManager.Users.User do
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -6,7 +6,7 @@ defmodule TaskManager.Models.User do
   schema "users" do
     field :email, :string
     field :name, :string
-    has_many :tasks, TaskManager.Models.Task
+    has_many :tasks, TaskManager.Tasks.Task
 
     timestamps()
   end

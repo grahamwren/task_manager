@@ -2,4 +2,6 @@
 
 <%= render "form.html", Map.put(assigns, :action, task_path(@conn, :update, @task)) %>
 
-<span><%= link "Back", to: task_path(@conn, :index) %></span>
+<div class="buttons">
+  <%= link "Back", to: task_path(@conn, :index) %>
+</div>

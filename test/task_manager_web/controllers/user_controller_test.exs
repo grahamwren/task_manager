@@ -1,14 +1,14 @@
 defmodule TaskManagerWeb.UserControllerTest do
   use TaskManagerWeb.ConnCase
 
-  alias TaskManager.Models
+  alias TaskManager.Users
 
   @create_attrs %{email: "some email", name: "some name"}
   @update_attrs %{email: "some updated email", name: "some updated name"}
   @invalid_attrs %{email: nil, name: nil}
 
   def fixture(:user) do
-    {:ok, user} = Models.create_user(@create_attrs)
+    {:ok, user} = Users.create_user(@create_attrs)
     user
   end
 

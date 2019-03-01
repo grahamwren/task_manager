@@ -37,16 +37,10 @@ defmodule TaskManagerWeb do
       # Use all HTML functionality (forms, tags, etc)
       use Phoenix.HTML
 
+      alias TaskManagerWeb.Router
       import TaskManagerWeb.Router.Helpers
       import TaskManagerWeb.ErrorHelpers
       import TaskManagerWeb.Gettext
-    end
-  end
-
-  def model do
-    quote do
-      use Phoenix.Model, root: "lib/task_manager_web/models",
-                         namespace: TaskManagerWeb
     end
   end
 
