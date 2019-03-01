@@ -15,6 +15,7 @@ defmodule TaskManager.Users.User do
   def changeset(user, attrs) do
     user
     |> cast(attrs, [:name, :email])
+    |> unique_constraint(:email)
     |> validate_required([:email])
   end
 end

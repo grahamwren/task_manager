@@ -48,7 +48,7 @@ defmodule TaskManagerWeb.TaskController do
     task = Tasks.get_task!(id)
 
     case Tasks.update_task(task, task_params) do
-      {:ok, task} ->
+      {:ok, _task} ->
         conn
         |> put_flash(:info, "Task updated successfully.")
         |> redirect(to: task_path(conn, :index))
