@@ -17,6 +17,8 @@ defmodule TaskManager.Tasks.Task do
     task
     |> cast(attrs, [:title, :description, :time_worked, :completed, :user_id])
     |> foreign_key_constraint(:user_id)
+    |> validate_length(:title, max: 255)
+    |> validate_length(:description, max: 255)
     |> validate_required([:title, :user_id])
   end
 end
