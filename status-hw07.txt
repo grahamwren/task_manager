@@ -1,0 +1,39 @@
+
+Web Dev Spring 2018 HW07 Status
+
+Answer the following questions:
+
+
+1. What's your name?
+Paul "Graham" Wren
+
+
+2. What's the URL of the github repo with your work for this HW?
+https://github.com/grahamwren/task_manager
+
+
+3. What's the version number of your github release?
+
+
+
+4. What's the URL that you deployed to?
+tasks2.cs4550.maineisland.co
+
+
+5. Is your app functionality complete? If not, what's missing?
+
+
+
+6. Is your app properly deployed? If not, what went wrong?
+
+
+
+7. Did you describe any significant design choices in your README?
+
+
+
+
+And here's a list of tasks for grading comments. Just leave this here:
+ - Development
+ - Deployment
+ - Submission

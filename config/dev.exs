@@ -60,6 +60,6 @@ config :task_manager, TaskManager.Repo,
   adapter: Ecto.Adapters.Postgres,
   username: "postgres",
   password: "postgres",
-  database: "task_manager_dev",
+  database: "task_manager_2_dev",
   hostname: "localhost",
   pool_size: 10

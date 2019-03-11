@@ -1,0 +1,16 @@
+[Unit]
+Description=Task Manager 2
+
+[Service]
+Type=simple
+User=task_manager2
+Group=task_manager2
+Restart=on-failure
+Environment=MIX_ENV=prod "PORT=4795"
+Environment=LANG=en_US.UTF-8
+
+WorkingDirectory=/home/task_manager2/task_manager
+ExecStart=/home/task_manager2/task_manager/start.sh
+
+[Install]
+WantedBy=multi-user.target
