@@ -1,6 +1,7 @@
 defmodule TaskManager.TimeBlocks.TimeBlock do
   use Ecto.Schema
   import Ecto.Changeset
+  import TaskManager.Utils
 
 
   schema "time_blocks" do
@@ -16,14 +17,13 @@ defmodule TaskManager.TimeBlocks.TimeBlock do
     time_block
     |> cast(attrs, [:start_time, :end_time, :task_id])
     |> foreign_key_constraint(:user_id)
-    |> validate_inclusion(:start_time, 0..DateTime.to_unix(DateTime.utc_now), message: "cannot be in future")
-    |> validate_inclusion(:end_time, 0..DateTime.to_unix(DateTime.utc_now), message: "cannot be in future")
-    |> IO.inspect
+    |> validate_inclusion(:start_time, 0..now(), message: "cannot be in future")
+    |> validate_inclusion(:end_time, 0..now(), message: "cannot be in future")
     |> validate_required([:start_time])
     |> fn time_block_changeset ->
          if attrs["end_time"],
            do: validate_inclusion(time_block_changeset, :end_time,
-             (attrs["start_time"])..(DateTime.to_unix(DateTime.utc_now)), message: "must be greater than start time"),
+             (attrs["start_time"])..now(), message: "must be greater than start time"),
            else: time_block_changeset
        end.()
   end

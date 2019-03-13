@@ -4,8 +4,10 @@ defmodule TaskManager.Tasks do
   """
 
   import Ecto.Query, warn: false
+  import TaskManager.Utils
   alias TaskManager.Repo
 
+  alias TaskManager.TimeBlocks
   alias TaskManager.Tasks.Task
 
   @doc """
@@ -36,6 +38,8 @@ defmodule TaskManager.Tasks do
 
   """
   def get_task!(id), do: Repo.get!(Task, id)
+
+  def get_task(id), do: Repo.get(Task, id)
 
   @doc """
   Creates a task.
@@ -101,4 +105,41 @@ defmodule TaskManager.Tasks do
   def change_task(%Task{} = task) do
     Task.changeset(task, %{})
   end
+
+  def add_time_block(task) do
+    TimeBlocks.create_time_block(%{start_time: now(), task_id: task.id})
+    task
+  end
+
+  def complete_time_blocks(task) do
+    # get all time_blocks, sorted by start_time, with indexes
+    tbs =
+      task
+      |> TimeBlocks.list_time_blocks_for_task
+      |> Stream.with_index
+    # ensure end_time for each:
+    #   stop each one at the start time of the next,
+    #   then the last at the current time
+    Enum.map tbs, fn {tb, i} ->
+      if tb.end_time do
+        tb
+      else
+        next_start_time = case Enum.at(tbs, i + 1) do
+          {%{start_time: start_time}, _} -> start_time
+          _ -> now()
+        end
+
+        TimeBlocks.update_time_block(tb, %{end_time: next_start_time})
+      end
+    end
+    task
+  end
+
+  def start_working(task) do
+    task
+    |> complete_time_blocks
+    |> add_time_block
+  end
+
+  def stop_working(task), do: complete_time_blocks(task)
 end

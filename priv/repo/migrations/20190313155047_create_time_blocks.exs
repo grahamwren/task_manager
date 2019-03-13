@@ -10,5 +10,8 @@ defmodule TaskManager.Repo.Migrations.CreateTimeBlocks do
       timestamps()
     end
 
+    alter table(:tasks) do
+      remove :time_worked
+    end
   end
 end

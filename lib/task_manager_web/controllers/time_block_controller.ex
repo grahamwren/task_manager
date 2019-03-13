@@ -3,6 +3,7 @@ defmodule TaskManagerWeb.TimeBlockController do
 
   alias TaskManager.TimeBlocks
   alias TaskManager.TimeBlocks.TimeBlock
+  alias TaskManager.Tasks
 
   action_fallback TaskManagerWeb.FallbackController
 
@@ -37,6 +38,30 @@ defmodule TaskManagerWeb.TimeBlockController do
     time_block = TimeBlocks.get_time_block!(id)
     with {:ok, %TimeBlock{}} <- TimeBlocks.delete_time_block(time_block) do
       send_resp(conn, :no_content, "")
+    end
+  end
+
+  def start_working(conn, %{"task_id" => task_id}) do
+    task = Tasks.get_task!(task_id)
+    if authenticate_task(task, conn.assigns.current_user) do
+      task = Tasks.start_working(task)
+      render(conn, "index.json", time_blocks: TimeBlocks.list_time_blocks_for_task(task))
+    else
+      conn
+      |> put_status(:unauthorized)
+      |> send_resp(:no_content, "")
+    end
+  end
+
+  def stop_working(conn, %{"task_id" => task_id}) do
+    task = Tasks.get_task!(task_id)
+    if authenticate_task(task, conn.assigns.current_user) do
+      task = Tasks.stop_working(task)
+      render(conn, "index.json", time_blocks: TimeBlocks.list_time_blocks_for_task(task))
+    else
+      conn
+      |> put_status(:unauthorized)
+      |> send_resp(:no_content, "")
     end
   end
 end

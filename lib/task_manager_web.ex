@@ -23,6 +23,7 @@ defmodule TaskManagerWeb do
       import Plug.Conn
       import TaskManagerWeb.Router.Helpers
       import TaskManagerWeb.Gettext
+      import TaskManagerWeb.AuthenticationHelpers
     end
   end
 

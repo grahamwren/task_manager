@@ -6,8 +6,6 @@ defmodule TaskManagerWeb.TaskController do
   alias TaskManager.Repo
   alias TaskManager.Tasks.Task
 
-  def authenticate_task(task, user), do: task.user_id === user.id
-
   def index(conn, _params) do
     tasks = Users.get_tasks(conn.assigns.current_user)
     render(conn, "index.html", tasks: tasks)
