@@ -26,7 +26,9 @@ defmodule TaskManagerWeb.Router do
     resources "/users", UserController, only: [:new, :create, :show, :edit, :update, :delete]
 
     pipe_through :require_logged_in
-    resources "/tasks", TaskController
+    resources "/tasks", TaskController do
+      resources "/time_blocks", TimeBlockController, except: [:new, :edit]
+    end
   end
 
   # Other scopes may use custom stacks.

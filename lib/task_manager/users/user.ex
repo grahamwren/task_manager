@@ -6,7 +6,10 @@ defmodule TaskManager.Users.User do
   schema "users" do
     field :email, :string
     field :name, :string
+
     has_many :tasks, TaskManager.Tasks.Task
+    has_many :underlings, TaskManager.Users.User, foreign_key: :manager_id
+    belongs_to :manager, TaskManager.Users.User
 
     timestamps()
   end
@@ -14,7 +17,8 @@ defmodule TaskManager.Users.User do
   @doc false
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:name, :email])
+    |> cast(attrs, [:name, :email, :manager_id])
+    |> cast_assoc(:manager)
     |> unique_constraint(:email)
     |> validate_required([:email])
   end

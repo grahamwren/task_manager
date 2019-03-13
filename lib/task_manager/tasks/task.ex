@@ -9,6 +9,8 @@ defmodule TaskManager.Tasks.Task do
     field :title, :string
     belongs_to :user, TaskManager.Users.User
 
+    has_many :time_blocks, TaskManager.TimeBlocks.TimeBlock
+
     timestamps()
   end
 
