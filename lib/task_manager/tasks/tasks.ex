@@ -8,6 +8,7 @@ defmodule TaskManager.Tasks do
   alias TaskManager.Repo
 
   alias TaskManager.TimeBlocks
+  alias TimeBlocks.TimeBlock
   alias TaskManager.Tasks.Task
 
   @doc """
@@ -104,6 +105,13 @@ defmodule TaskManager.Tasks do
   """
   def change_task(%Task{} = task) do
     Task.changeset(task, %{})
+  end
+
+  def in_progress?(task) do
+    query = from tb in TimeBlock,
+                 where: is_nil(tb.end_time) and tb.task_id == ^task.id,
+                 select: count(tb.id)
+    Repo.all(query)
   end
 
   def add_time_block(task) do

@@ -8,6 +8,7 @@
 // therefore are always executed.
 
 import css from "../css/app.css";
+import $ from 'jquery';
 
 // Import dependencies
 //
@@ -21,3 +22,9 @@ import "phoenix_html"
 // paths "./socket" or full ones "web/static/js/socket".
 
 // import socket from "./socket"
+
+$(() => {
+  $('.link').click(function () {
+    window.location = $(this).data("href");
+  });
+});

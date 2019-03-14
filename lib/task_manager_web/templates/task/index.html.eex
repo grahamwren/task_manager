@@ -1,5 +1,9 @@
-<h2>Your Tasks</h2>
-
-<%= render TaskManagerWeb.SharedView, "task_table.html", %{tasks: @tasks, conn: @conn} %>
-
-<span><%= link "New Task", to: task_path(@conn, :new) %></span>
+<section>
+  <div class="things-container">
+    <div class="section-header row">
+      <h3 class="section-title">My Tasks</h3>
+      <%= link "Add Task", to: task_path(@conn, :new), class: "add-task" %>
+    </div>
+    <%= render TaskManagerWeb.SharedView, "tasks.html", %{tasks: @tasks, conn: @conn} %>
+  </div>
+</section>

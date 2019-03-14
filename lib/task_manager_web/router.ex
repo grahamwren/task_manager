@@ -12,6 +12,7 @@ defmodule TaskManagerWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug :fetch_session
   end
 
   pipeline :require_logged_in do
@@ -23,16 +24,24 @@ defmodule TaskManagerWeb.Router do
 
     get "/", PageController, :index
     resources "/sessions", SessionController, only: [:create, :delete], singleton: true
-    resources "/users", UserController, only: [:new, :create, :show, :edit, :update, :delete]
+    resources "/users", UserController
 
     pipe_through :require_logged_in
-    resources "/tasks", TaskController do
-      resources "/time_blocks", TimeBlockController, except: [:new, :edit]
-    end
+    resources "/tasks", TaskController
   end
 
   # Other scopes may use custom stacks.
-  # scope "/api", TaskManagerWeb do
-  #   pipe_through :api
-  # end
+   scope "/api/v1", TaskManagerWeb do
+     pipe_through :api
+
+     resources "/tasks", TaskController, only: [] do
+       post "/start_working", TimeBlockController, :start_working, as: :start
+       post "/stop_working", TimeBlockController, :stop_working, as: :stop
+       resources "/time_blocks", TimeBlockController, except: [:new, :edit]
+     end
+
+     resources "/users", UserController, only: [] do
+       post "/manage", UserController, :manage, as: :manage
+     end
+   end
 end

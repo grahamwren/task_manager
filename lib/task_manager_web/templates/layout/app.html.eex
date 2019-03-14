@@ -21,6 +21,15 @@
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <div class="nav-item">
+              <%= link "Home", to: page_path(@conn, :index)%>
+            </div>
+            <div class="nav-item">
+              <%= link "My Tasks", to: task_path(@conn, :index)%>
+            </div>
+            <div class="nav-item">
+              <%= link "All Users", to: user_path(@conn, :index)%>
+            </div>
             <div class="mr-auto"></div>
             <div class="nav-item">
               <%= if @current_user do %>
@@ -61,5 +70,6 @@
       </main>
     </div>
     <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   </body>
 </html>

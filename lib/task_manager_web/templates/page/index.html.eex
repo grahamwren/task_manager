@@ -1,11 +1,21 @@
 <%= if @current_user do %>
-  <div class="tasks-container">
-    <%= link "Add Task", to: task_path(@conn, :new) %>
-    <h3 class="task-list-title">Your Tasks</h3>
-
-    <%= render TaskManagerWeb.SharedView, "task_table.html", %{tasks: @tasks, conn: @conn} %>
-
-  </div>
+  <section>
+    <div class="things-container">
+      <div class="section-header row">
+        <h3 class="section-title">Task Report</h3>
+        <%= link "Add Task", to: task_path(@conn, :new), class: "add-task" %>
+      </div>
+      <%= render TaskManagerWeb.SharedView, "tasks.html", %{tasks: @tasks, conn: @conn} %>
+    </div>
+  </section>
+  <section>
+    <div class="things-container">
+      <div class="section-header row">
+        <h3 class="section-title">My Underlings</h3>
+      </div>
+      <%= render TaskManagerWeb.SharedView, "users.html", %{users: @users, conn: @conn} %>
+    </div>
+  </section>
 <% else %>
   <h2>Login to see tasks</h2>
 <% end %>

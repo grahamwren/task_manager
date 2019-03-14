@@ -12,6 +12,14 @@ main {
   justify-content: center;
 }
 
+p {
+  margin-bottom: 0.5rem;
+}
+
+.nav-item {
+  margin-right: 1rem;
+}
+
 .main-section {
   height: 100%;
   display: flex;
@@ -27,9 +35,9 @@ main {
   width: 80%;
 }
 
-.tasks-container {
+section {
+  margin-top: 1rem;
   width: 100%;
-  padding: 2rem;
 }
 
 .buttons *:not(:first-child):before {
@@ -37,25 +45,39 @@ main {
   padding-right: 0.25rem;
 }
 
-.task-list-title {
-  padding: 1rem 0;
+.things-container {
+  width: 100%;
 }
 
-.table {
-  table-layout: fixed;
+.section-header .add-task {
+  margin-left: auto;
 }
 
-.table td, .table th {
-  width: max-content;
+.things {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.thing {
+  border: 1px solid black;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  width: 16rem;
   overflow: scroll;
 }
 
-td.text-right {
-  width: max-content;
-  white-space: nowrap;
+.thing .info {
+  height: 9rem;
+}
+
+.task-title {
+  margin-bottom: 0;
 }
 
 .task-description {
-  width: 20rem;
+  font-size: 0.8rem;
+  height: 2.5rem;
+  color: grey;
   overflow: scroll;
 }
+

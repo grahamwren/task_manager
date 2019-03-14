@@ -1,4 +1,4 @@
-<table class="table">
+<table class="table table-striped">
   <thead>
     <tr>
       <th>Title</th>
@@ -11,15 +11,14 @@
   </thead>
   <tbody>
 <%= for task <- @tasks do %>
-    <tr>
+    <tr class="link" data-href="<%= task_path(@conn, :show, task) %>">
+      <td><%= task.user.name || task.user.email %></td>
       <td><%= task.title %></td>
       <td class="task-description"><%= task.description %></td>
-      <td><%= task.time_worked * 15 %></td>
       <td><%= if task.completed, do: "✓", else: "X" %></td>
 
       <td class="text-right">
-        <span><%= link "Show", to: task_path(@conn, :show, task), class: "btn btn-default btn-xs" %></span>
-        <span><%= link "Edit", to: task_path(@conn, :edit, task), class: "btn btn-default btn-xs" %></span>
+        <span class="btn btn-default btn-xs">Start Working</span>
         <span><%= link "Delete", to: task_path(@conn, :delete, task), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %></span>
       </td>
     </tr>

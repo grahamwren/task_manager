@@ -1,0 +1,25 @@
+<div class="thing">
+  <% task = @task %>
+  <% in_progress = TaskManager.Tasks.in_progress?(task) %>
+  <div class="info">
+    <p class="task-title"><%= task.title %></p>
+    <p class="task-description"><%= task.description %></p>
+    <p class="user-name">User: <%= task.user.name || task.user.email %></p>
+    <p class="completed">Completed: <%= if task.completed, do: "✓", else: "X" %></p>
+  </div>
+  <div class="actions">
+    <button class="btn btn-info toggle-working <%= if in_progress, do: "start-working", else: "stop-working"%>">
+       <%= if in_progress, do: "Start", else: "Stop"%>
+    </button>
+    <span>
+      <%= link "✏️", to: task_path(@conn, :edit, task),class: "btn btn-info btn-xs"%>
+    </span>
+    <span>
+      <%= link "🗑️", to: task_path(@conn, :delete, task),
+            method: :delete,
+            data: [confirm: "Are you sure?"],
+            class: "btn btn-danger btn-xs"%>
+    </span>
+
+  </div>
+</div>

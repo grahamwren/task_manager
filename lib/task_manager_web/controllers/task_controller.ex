@@ -12,15 +12,15 @@ defmodule TaskManagerWeb.TaskController do
   end
 
   def new(conn, _params) do
+    current_user = conn.assigns.current_user
     changeset = Tasks.change_task(%Task{})
-    render(conn, "new.html", changeset: changeset)
+    possible_task_owners = Enum.map(Users.get_underlings(current_user), fn u ->
+      {u.name || u.email, u.id}
+    end)
+    render(conn, "new.html", changeset: changeset, owners: possible_task_owners)
   end
 
   def create(conn, %{"task" => task_params}) do
-    task_params = %{
-      task_params |
-      "user_id" => conn.assigns.current_user.id
-    }
     case Tasks.create_task(task_params) do
       {:ok, _task} ->
         conn
@@ -47,8 +47,12 @@ defmodule TaskManagerWeb.TaskController do
   def edit(conn, %{"id" => id}) do
     task = Tasks.get_task!(id)
     changeset = Tasks.change_task(task)
+    current_user = conn.assigns.current_user
+    possible_task_owners = Enum.map(Users.get_underlings(current_user), fn u ->
+      {u.name || u.email, u.id}
+    end)
     if authenticate_task(task, conn.assigns.current_user) do
-      render(conn, "edit.html", task: task, changeset: changeset)
+      render(conn, "edit.html", task: task, changeset: changeset, owners: possible_task_owners)
     else
       conn
       |> put_flash(:error, "Task belongs to a different user")

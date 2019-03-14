@@ -18,19 +18,14 @@
   </div>
 
   <div class="form-group">
-    <%= label f, :time_worked, "Time Worked (15 min increments)", class: "control-label" %>
-    <%= number_input f, :time_worked, class: "form-control" %>
-    <%= error_tag f, :time_worked %>
-  </div>
-
-  <div class="form-group">
     <%= label f, :completed, class: "control-label" %>
     <%= checkbox f, :completed, class: "checkbox" %>
     <%= error_tag f, :completed %>
   </div>
 
   <div class="form-group">
-    <%= hidden_input f, :user_id, value: @current_user.id %>
+    <%= label f, :user_id %>
+    <%= select f, :user_id, @owners %>
   </div>
 
   <div class="form-group">
