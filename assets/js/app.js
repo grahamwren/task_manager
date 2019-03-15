@@ -77,7 +77,7 @@ $(() => {
     if ($(this).data('start')) {
       $.ajax(`/api/v1/tasks/${taskId}/start_working`, {
         method: 'post',
-        success: () => {
+        success: ({data}) => {
           $(this).data('start', false);
           $(this).text('Stop');
           updateTimeBlocks(data)
@@ -135,10 +135,10 @@ $(() => {
         $('.time-block-form .btn.delete').click(function() {
           const tbId = $(this).data('tb-id');
           $.ajax(`/api/v1/tasks/${taskId}/time_blocks/${tbId}`, {
-            method: 'delete'
-          }).done(() =>
-                    $(this).closest('.time-block-form').remove()
-          );
+            method: 'delete',
+            success: () =>
+              $(this).closest('.time-block-form').remove()
+          });
         });
       }
     });

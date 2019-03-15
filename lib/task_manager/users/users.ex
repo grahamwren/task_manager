@@ -70,6 +70,8 @@ defmodule TaskManager.Users do
        end)
   end
 
+  def preload(user, fields), do: Repo.preload(user, fields)
+
   @doc """
   Creates a user.
 

@@ -2,6 +2,10 @@
 <div class="show-page">
   <%= render TaskManagerWeb.SharedView, "user.html", %{user: @user, conn: @conn} %>
 </div>
+<h2>Underlings</h2>
+<div class="underlings">
+  <%= render TaskManagerWeb.SharedView, "users.html", %{users: @user.underlings, conn: @conn} %>
+</div>
 <div>
   <span><%= link "Edit", to: user_path(@conn, :edit, @user) %></span> |
   <span><%= link "Back", to: "/" %></span>

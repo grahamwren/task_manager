@@ -25,8 +25,6 @@ defmodule TaskManagerWeb.UserController do
   def index(conn, _params) do
     if conn.assigns.current_user do
       users = Users.list_users
-
-
       render(conn, "index.html", users: users)
     else
       conn
@@ -36,7 +34,7 @@ defmodule TaskManagerWeb.UserController do
   end
 
   def show(conn, %{"id" => id}) do
-    user = Users.get_user!(id)
+    user = Users.get_user!(id) |> Users.preload(:underlings)
     if conn.assigns.current_user && authenticate_user(user, conn.assigns.current_user) do
       render(conn, "show.html", user: user)
     else
