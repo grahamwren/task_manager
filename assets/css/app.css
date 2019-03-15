@@ -131,3 +131,29 @@ section {
   overflow: scroll;
 }
 
+.time-blocks {
+  width: max-content;
+}
+
+.time-block-inputs {
+  width: 100%;
+}
+
+.time-block-inputs {
+  margin-right: 0.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.time-block-form {
+  display: flex;
+  margin-bottom: 0.5rem;
+}
+
+.time-block-form .update {
+  margin-left: auto;
+}
+.time-block-form .delete {
+  margin-left: 0.5rem;
+}
+

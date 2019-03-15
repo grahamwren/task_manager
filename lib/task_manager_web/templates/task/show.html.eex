@@ -2,6 +2,7 @@
 <div class="show-page">
   <%= render TaskManagerWeb.SharedView, "task.html", %{task: @task, conn: @conn} %>
 </div>
+<div class="time-blocks" data-task-id="<%= @task.id %>"></div>
 <div class="buttons">
   <span><%= link "Edit", to: task_path(@conn, :edit, @task) %></span>
   <span><%= link "Back", to: (if @task.user_id === @current_user.id, do: task_path(@conn, :index), else: page_path(@conn, :index)) %></span>

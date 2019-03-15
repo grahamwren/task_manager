@@ -21,10 +21,13 @@ defmodule TaskManager.TimeBlocks.TimeBlock do
     |> validate_inclusion(:end_time, 0..now(), message: "cannot be in future")
     |> validate_required([:start_time])
     |> fn time_block_changeset ->
-         if attrs["end_time"],
+         start_time = Map.get(time_block_changeset.changes, :start_time) || time_block.start_time
+         end_time = Map.get(time_block_changeset.changes, :end_time)
+         if end_time,
            do: validate_inclusion(time_block_changeset, :end_time,
-             (attrs["start_time"])..now(), message: "must be greater than start time"),
+             start_time..end_time, message: "must be greater than start time"),
            else: time_block_changeset
        end.()
+    |> IO.inspect()
   end
 end

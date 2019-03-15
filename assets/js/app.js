@@ -9,6 +9,9 @@
 
 import css from "../css/app.css";
 import $ from 'jquery';
+import {DateTime, Settings} from 'luxon';
+Settings.defaultLocale = 'utc';
+const DATETIME_FORMAT = "yyyy-MM-dd'T'hh:mm:ss";
 
 // Import dependencies
 //
@@ -24,6 +27,13 @@ import "phoenix_html"
 // import socket from "./socket"
 
 $(() => {
+  function getDateTimeLocal(utcSeconds) {
+    return DateTime
+      .fromMillis(utcSeconds * 1000)
+      .toLocal()
+      .toFormat(DATETIME_FORMAT);
+  }
+
   $('.link').click(function () {
     window.location = $(this).data('href');
   });
@@ -55,4 +65,70 @@ $(() => {
       });
     }
   });
+
+  const timeBlocksElement = $('.time-blocks');
+  const taskId = timeBlocksElement.data('task-id');
+  if (timeBlocksElement[0]) {
+    $.ajax(`/api/v1/tasks/${taskId}/time_blocks`, {
+      method: 'get'
+    }).done(({data}) => {
+      const timeBlocks = [];
+      for (const timeBlock of data) {
+        timeBlocks.push(
+          `<div data-tb-id="${timeBlock.id}" class="time-block-form">
+             <span class="time-block-inputs">
+               From: <input id="start_time" type="datetime-local" value="${getDateTimeLocal(timeBlock.start_time)}"/>
+               To: <input id="end_time" type="datetime-local" value="${(timeBlock.end_time && getDateTimeLocal(timeBlock.end_time)) || ''}"/>
+             </span>
+             <a
+              class="btn btn-info btn-xs update"
+              data-tb-id="${timeBlock.id}"
+             >Update</a>
+             <a
+               class="btn btn-danger btn-xs delete"
+               data-tb-id="${timeBlock.id}"
+             >Delete</a>
+          </div>`);
+      }
+      timeBlocksElement.html(timeBlocks.join(''));
+
+      $('.time-block-form .btn.update').click(function() {
+        const tbId = $(this).data('tb-id');
+
+        const form = $(`.time-block-form[data-tb-id=${tbId}]`);
+        const start = DateTime.fromFormat(
+          form.find('input#start_time').val(),
+          DATETIME_FORMAT, {
+            zone: 'local'
+          }).toUTC().toMillis() / 1000;
+        const end = DateTime.fromFormat(
+          form.find('input#end_time').val(),
+          DATETIME_FORMAT, {
+            zone: 'local'
+          }).toUTC().toMillis() / 1000;
+        $.ajax(`/api/v1/tasks/${taskId}/time_blocks/${tbId}`, {
+          method: 'patch',
+          data: {
+            time_block: {
+              start_time: start,
+              end_time: end
+            }
+          }
+        }).done(({data}) => {
+          const form = $(this).closest('.time-block-form');
+          form.find('input#start_time').val(getDateTimeLocal(data.start_time))
+          form.find('input#end_time').val(getDateTimeLocal(data.end_time))
+        });
+      });
+
+      $('.time-block-form .btn.delete').click(function() {
+        const tbId = $(this).data('tb-id');
+        $.ajax(`/api/v1/tasks/${taskId}/time_blocks/${tbId}`, {
+          method: 'delete'
+        }).done(() =>
+          $(this).closest('.time-block-form').remove()
+        );
+      });
+    });
+  }
 });
