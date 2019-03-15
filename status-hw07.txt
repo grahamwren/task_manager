@@ -13,7 +13,7 @@ https://github.com/grahamwren/task_manager
 
 
 3. What's the version number of your github release?
-
+v2.0.0
 
 
 4. What's the URL that you deployed to?
@@ -21,15 +21,15 @@ tasks2.cs4550.maineisland.co
 
 
 5. Is your app functionality complete? If not, what's missing?
-
+Yes
 
 
 6. Is your app properly deployed? If not, what went wrong?
-
+Yes
 
 
 7. Did you describe any significant design choices in your README?
-
+Yes
 
 
 
