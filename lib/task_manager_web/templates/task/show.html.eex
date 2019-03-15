@@ -30,5 +30,5 @@
 </ul>
 <div class="buttons">
   <%= link "Edit", to: task_path(@conn, :edit, @task) %>
-  <%= link "Back", to: task_path(@conn, :index) %>
+  <%= link "Back", to: (if @task.user_id === @current_user.id, do: task_path(@conn, :index), else: page_path(@conn, :index)) %>
 </div>

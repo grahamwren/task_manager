@@ -21,11 +21,14 @@ defmodule TaskManager.TimeBlocks do
     Repo.all(TimeBlock)
   end
 
-  def list_time_blocks_for_task(%{id: task_id}), do:
-    __MODULE__.list_time_blocks_for_task(task_id)
+  def list_time_blocks_for_task(%{id: task_id} = task),
+      do: list_time_blocks_for_task(task_id)
+          |> Enum.map(fn tb -> %TimeBlock{tb | task: task} end)
 
   def list_time_blocks_for_task(task_id) do
-    Repo.all(from tb in TimeBlock, where: tb.task_id == ^task_id, order_by: [asc: :start_time])
+    Repo.all(from tb in TimeBlock,
+             where: tb.task_id == ^task_id,
+             order_by: [asc: :start_time])
   end
 
   @doc """

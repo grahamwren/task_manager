@@ -1,15 +1,21 @@
-<div class="thing">
-  <% task = @task %>
-  <% in_progress = TaskManager.Tasks.in_progress?(task) %>
+<% task = @task %>
+<% in_progress = TaskManager.Tasks.in_progress?(task) %>
+<% time_worked = TaskManager.Tasks.time_worked(task) %>
+
+<div class="thing task" data-task-id="<%= task.id %>">
   <div class="info">
     <p class="task-title"><%= task.title %></p>
     <p class="task-description"><%= task.description %></p>
+    <p class="task-time">Time Worked: <%= div time_worked, (60 * 60) %>:<%= div (rem time_worked, (60 * 60)), 60 %>:<%= rem time_worked, 60 %></p>
     <p class="user-name">User: <%= task.user.name || task.user.email %></p>
     <p class="completed">Completed: <%= if task.completed, do: "✓", else: "X" %></p>
   </div>
   <div class="actions">
-    <button class="btn btn-info toggle-working <%= if in_progress, do: "start-working", else: "stop-working"%>">
-       <%= if in_progress, do: "Start", else: "Stop"%>
+    <button
+      class="btn btn-info toggle-working"
+      data-start="<%= !in_progress %>"
+      data-task-id="<%= task.id %>">
+        <%= if in_progress, do: "Stop", else: "Start"%>
     </button>
     <span>
       <%= link "✏️", to: task_path(@conn, :edit, task),class: "btn btn-info btn-xs"%>

@@ -95,7 +95,7 @@ defmodule TaskManagerWeb.UserController do
     current_user = conn.assigns.current_user
     user = Users.get_user!(user_id)
     if current_user && user do
-      with {:ok, user} <- Users.update_user(user, %User{user | manager_id: current_user.id}) do
+      with {:ok, user} <- Users.update_user(user, %{manager_id: current_user.id}) do
         user = %User{user | manager: current_user}
         conn
         |> put_status(:ok)

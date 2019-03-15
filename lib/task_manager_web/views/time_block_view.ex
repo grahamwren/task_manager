@@ -11,6 +11,16 @@ defmodule TaskManagerWeb.TimeBlockView do
   end
 
   def render("time_block.json", %{time_block: time_block}) do
+    task = time_block.task
+    time_block = case task do
+      %{id: id} -> %{time_block | task: %{
+        id: id,
+        title: task.title,
+        description: task.description,
+        completed: task.completed
+      }}
+      _ -> %{time_block | task: nil}
+    end
     %{id: time_block.id,
       start_time: time_block.start_time,
       end_time: time_block.end_time,

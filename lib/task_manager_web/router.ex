@@ -13,6 +13,7 @@ defmodule TaskManagerWeb.Router do
   pipeline :api do
     plug :accepts, ["json"]
     plug :fetch_session
+    plug TaskManagerWeb.Plugs.FetchSession
   end
 
   pipeline :require_logged_in do

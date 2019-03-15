@@ -1,9 +1,10 @@
-<div class="thing">
-  <% user = case IO.inspect(@user.manager) do
-    %{id: id} -> @user
-    _ -> %{@user | manager: nil}
-  end %>
-  <% current_user = @conn.assigns.current_user %>
+<% user = case @user.manager do
+  %{id: _} -> @user
+  _ -> %{@user | manager: nil}
+end %>
+<% current_user = @conn.assigns.current_user %>
+
+<div class="thing user" data-user-id="<%= user.id%>">
   <div class="info">
     <p class="user-name">Name: <%= user.name %></p>
     <p class="user-email">Email: <%= user.email %></p>
@@ -12,12 +13,12 @@
   <div class="actions">
     <%= if user.id !== current_user.id && (!user.manager || current_user.id !== user.manager.id) do %>
       <span>
-        <a class="btn btn-info btn-xs">Manage</a>
+        <a class="btn btn-info btn-xs manage" data-user-id="<%= user.id %>">Manage</a>
       </span>
     <% else %>
-        <span>
-          <a class="btn disabled btn-info btn-xs">Manage</a>
-        </span>
+      <span>
+        <a class="btn disabled btn-info btn-xs manage">Manage</a>
+      </span>
     <% end %>
   </div>
 </div>

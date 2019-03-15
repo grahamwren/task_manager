@@ -1,4 +1,4 @@
-<div class="things">
+<div class="things users">
   <%= for user <- @users do %>
     <%= render TaskManagerWeb.SharedView, "user.html", %{user: user, conn: @conn} %>
   <% end %>

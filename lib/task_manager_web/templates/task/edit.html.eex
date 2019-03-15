@@ -3,5 +3,5 @@
 <%= render "form.html", Map.put(assigns, :action, task_path(@conn, :update, @task)) %>
 
 <div class="buttons">
-  <%= link "Back", to: task_path(@conn, :index) %>
+  <%= link "Back", to: (if @task.user_id === @current_user.id, do: task_path(@conn, :index), else: page_path(@conn, :index)) %>
 </div>

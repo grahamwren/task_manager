@@ -25,6 +25,34 @@ import "phoenix_html"
 
 $(() => {
   $('.link').click(function () {
-    window.location = $(this).data("href");
+    window.location = $(this).data('href');
+  });
+
+  $('.manage').click(function () {
+    const userId = $(this).data('user-id');
+    $.ajax(`/api/v1/users/${userId}/manage`, {
+      method: 'post'
+    }).done(({data: user}) =>
+      $(`.user[data-user-id=${user.id}] .user-manager`)
+        .text(`Manager: ${user.manager.name || user.manager.email}`));
+  });
+
+  $('.toggle-working').click(function () {
+    const taskId = $(this).data('task-id');
+    if ($(this).data('start')) {
+      $.ajax(`/api/v1/tasks/${taskId}/start_working`, {
+        method: 'post'
+      }).done(() => {
+        $(this).data('start', false);
+        $(this).text('Stop');
+      });
+    } else {
+      $.ajax(`/api/v1/tasks/${taskId}/stop_working`, {
+        method: 'post'
+      }).done(() => {
+        $(this).text('Start');
+        $(this).data('start', true);
+      });
+    }
   });
 });

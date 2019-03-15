@@ -54,11 +54,13 @@ section {
 }
 
 .things {
+  margin: -0.5rem;
   display: flex;
   flex-wrap: wrap;
 }
 
 .thing {
+  margin: 0.5rem;
   border: 1px solid black;
   border-radius: 0.5rem;
   padding: 1rem;
@@ -66,7 +68,11 @@ section {
   overflow: scroll;
 }
 
-.thing .info {
+.task .info {
+  height: 12rem;
+}
+
+.user .info {
   height: 9rem;
 }
 

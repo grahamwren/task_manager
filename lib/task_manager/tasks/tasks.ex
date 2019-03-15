@@ -111,7 +111,14 @@ defmodule TaskManager.Tasks do
     query = from tb in TimeBlock,
                  where: is_nil(tb.end_time) and tb.task_id == ^task.id,
                  select: count(tb.id)
-    Repo.all(query)
+    Repo.one(query) !== 0
+  end
+
+  def time_worked(task) do
+    task
+    |> Ecto.assoc(:time_blocks)
+    |> Repo.all
+    |> Enum.reduce(0, fn tb, sum -> sum + IO.inspect(((tb.end_time || now()) - tb.start_time)) end)
   end
 
   def add_time_block(task) do
