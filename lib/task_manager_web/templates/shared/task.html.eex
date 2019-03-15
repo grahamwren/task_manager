@@ -3,8 +3,8 @@
 <% time_worked = TaskManager.Tasks.time_worked(task) %>
 
 <div class="thing task" data-task-id="<%= task.id %>">
-  <div class="info">
-    <p class="task-title"><%= task.title %></p>
+  <div class="info link" data-href="<%= task_path(@conn, :show, task) %>">
+    <p class="task-title link" data-href="<%= task_path(@conn, :show, task) %>"><%= task.title %></p>
     <p class="task-description"><%= task.description %></p>
     <p class="task-time">Time Worked: <%= div time_worked, (60 * 60) %>:<%= div (rem time_worked, (60 * 60)), 60 %>:<%= rem time_worked, 60 %></p>
     <p class="user-name">User: <%= task.user.name || task.user.email %></p>

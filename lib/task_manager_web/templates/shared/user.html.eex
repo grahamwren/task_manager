@@ -6,8 +6,8 @@ end %>
 
 <div class="thing user" data-user-id="<%= user.id%>">
   <div class="info">
-    <p class="user-name">Name: <%= user.name %></p>
-    <p class="user-email">Email: <%= user.email %></p>
+    <p class="user-name link" data-href="<%= user_path(@conn, :show, user)%>">Name: <%= user.name %></p>
+    <p class="user-email link" data-href="<%= user_path(@conn, :show, user)%>">Email: <%= user.email %></p>
     <p class="user-manager">Manager: <%= user.manager && (user.manager.name || user.manager.email) %></p>
   </div>
   <div class="actions">

@@ -1,34 +1,8 @@
-<h2>Show Task</h2>
-
-<ul class="task-list">
-
-  <li>
-    <strong>Title: </strong>
-    <%= @task.title %>
-  </li>
-
-  <li>
-    <strong>Description: </strong>
-    <%= @task.description %>
-  </li>
-
-  <li>
-    <strong>Time worked (mins): </strong>
-    <%= @task.time_worked * 15 %>
-  </li>
-
-  <li>
-    <strong>Completed: </strong>
-    <%= @task.completed %>
-  </li>
-
-  <li>
-    <strong>User: </strong>
-    <%= @task.user.name || @task.user.email %>
-  </li>
-
-</ul>
+<h2>Task</h2>
+<div class="show-page">
+  <%= render TaskManagerWeb.SharedView, "task.html", %{task: @task, conn: @conn} %>
+</div>
 <div class="buttons">
-  <%= link "Edit", to: task_path(@conn, :edit, @task) %>
-  <%= link "Back", to: (if @task.user_id === @current_user.id, do: task_path(@conn, :index), else: page_path(@conn, :index)) %>
+  <span><%= link "Edit", to: task_path(@conn, :edit, @task) %></span>
+  <span><%= link "Back", to: (if @task.user_id === @current_user.id, do: task_path(@conn, :index), else: page_path(@conn, :index)) %></span>
 </div>

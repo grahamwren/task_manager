@@ -19,7 +19,7 @@ defmodule TaskManager.Users do
 
   """
   def list_users do
-    Repo.all(User)
+    Repo.all(from u in User, order_by: [asc: :email])
     |> Repo.preload(:manager)
   end
 
@@ -37,9 +37,13 @@ defmodule TaskManager.Users do
       ** (Ecto.NoResultsError)
 
   """
-  def get_user!(id), do: Repo.get!(User, id)
+  def get_user!(id), do: Repo.get!(User, id) |> Repo.preload(:manager)
 
-  def get_user(id), do: Repo.get(User, id)
+  def get_user(id), do: Repo.get(User, id) |> Repo.preload(:manager)
+
+  def get_manager(%{manager: %{id: _} = m}), do: m
+  def get_manager(%{manager: _, manager_id: id}), do: id && Repo.get(User, id)
+  def get_manager(id), do: get_user(id) |> fn u -> u.manager end.()
 
   def get_user_by_email(email), do: Repo.get_by(User, email: email)
 

@@ -2,4 +2,7 @@
   <%= for task <- @tasks do %>
     <%= render TaskManagerWeb.SharedView, "task.html", %{task: task, conn: @conn} %>
   <% end %>
+  <%= if length(@tasks) === 0 do %>
+    <p class="help-text">Ask your manger to add some tasks to get started.</p>
+  <% end %>
 </div>

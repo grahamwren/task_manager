@@ -1,7 +1,11 @@
 <%= if @current_user do %>
+  <div class="manager-info">
+    <% manager = TaskManager.Users.get_manager(@current_user) %>
+    <h4 class="link" data-href="<%= manager && user_path(@conn, :show, manager)%>">Your Manager: <%= manager && (manager.name ||  manager.email) %></h4>
+  </div>
   <section>
     <div class="things-container">
-      <div class="section-header row">
+      <div class="section-header">
         <h3 class="section-title">Task Report</h3>
         <%= link "Add Task", to: task_path(@conn, :new), class: "add-task" %>
       </div>
@@ -10,7 +14,7 @@
   </section>
   <section>
     <div class="things-container">
-      <div class="section-header row">
+      <div class="section-header">
         <h3 class="section-title">My Underlings</h3>
       </div>
       <%= render TaskManagerWeb.SharedView, "users.html", %{users: @users, conn: @conn} %>

@@ -2,4 +2,7 @@
   <%= for user <- @users do %>
     <%= render TaskManagerWeb.SharedView, "user.html", %{user: user, conn: @conn} %>
   <% end %>
+  <%= if length(@users) === 0 do %>
+    <p class="help-text">Find some users to manage. Try the "All Users" nav link.</p>
+  <% end %>
 </div>

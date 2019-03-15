@@ -118,7 +118,7 @@ defmodule TaskManager.Tasks do
     task
     |> Ecto.assoc(:time_blocks)
     |> Repo.all
-    |> Enum.reduce(0, fn tb, sum -> sum + IO.inspect(((tb.end_time || now()) - tb.start_time)) end)
+    |> Enum.reduce(0, fn tb, sum -> sum + ((tb.end_time || now()) - tb.start_time) end)
   end
 
   def add_time_block(task) do

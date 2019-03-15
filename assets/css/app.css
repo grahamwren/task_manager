@@ -49,8 +49,47 @@ section {
   width: 100%;
 }
 
+.section-header {
+  display: flex;
+  align-items: center;
+}
+
 .section-header .add-task {
   margin-left: auto;
+}
+
+.help-text {
+  margin: 2rem auto;
+}
+
+.manager-info {
+  width: 100%;
+}
+
+.navbar {
+  height: 4rem;
+}
+
+.show-page {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.show-page .user {
+  width: max-content;
+}
+
+.show-page .task {
+  width: 50%;
+}
+
+.show-page .user .manage {
+  visibility: hidden;
+}
+
+.link {
+  cursor: pointer;
 }
 
 .things {
@@ -66,6 +105,11 @@ section {
   padding: 1rem;
   width: 16rem;
   overflow: scroll;
+}
+
+.thing .actions {
+  display: flex;
+  justify-content: space-between;
 }
 
 .task .info {
